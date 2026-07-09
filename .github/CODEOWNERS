@@ -1,0 +1,25 @@
+# ------------------------------------------------------------------
+# AgentMesh Code Owners
+#
+# Every pull request requires review from one of the code owners.
+# ------------------------------------------------------------------
+
+# Default owner
+* @devloperdevesh
+
+# Runtime
+/cmd/ @devloperdevesh
+/internal/ @devloperdevesh
+
+# Documentation
+/docs/ @devloperdevesh
+/*.md @devloperdevesh
+
+# GitHub configuration
+/.github/ @devloperdevesh
+
+# Benchmarks
+/benchmark/ @devloperdevesh
+
+# Examples
+/examples/ @devloperdevesh
