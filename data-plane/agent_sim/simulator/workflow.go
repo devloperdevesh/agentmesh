@@ -1,10 +1,8 @@
-package agent_sim
+package simulator
 
 import "time"
 
-
 type Workflow struct {
-
 	ID string
 
 	CurrentStep int
@@ -12,5 +10,4 @@ type Workflow struct {
 	Status string
 
 	UpdatedAt time.Time
-
 }

@@ -1,19 +1,15 @@
-package agent_sim
+package simulator
 
 import (
 	"fmt"
 	"time"
 )
 
-
 type Agent struct {
-
 	Workflow Workflow
 
 	Checkpoint int
-
 }
-
 
 func NewAgent(id string) *Agent {
 
@@ -21,28 +17,23 @@ func NewAgent(id string) *Agent {
 
 		Workflow: Workflow{
 
-			ID:id,
+			ID: id,
 
-			Status:"running",
+			Status: "running",
 
-			CurrentStep:0,
+			CurrentStep: 0,
 
-			UpdatedAt:time.Now(),
-
+			UpdatedAt: time.Now(),
 		},
-
 	}
 
 }
 
-
-
-func (a *Agent) ExecuteStep(){
+func (a *Agent) ExecuteStep() {
 
 	a.Workflow.CurrentStep++
 
-	a.Workflow.UpdatedAt=time.Now()
-
+	a.Workflow.UpdatedAt = time.Now()
 
 	fmt.Printf(
 		"[Agent] executed step %d\n",
@@ -51,12 +42,9 @@ func (a *Agent) ExecuteStep(){
 
 }
 
+func (a *Agent) CreateCheckpoint() {
 
-
-func (a *Agent) CreateCheckpoint(){
-
-	a.Checkpoint=a.Workflow.CurrentStep
-
+	a.Checkpoint = a.Workflow.CurrentStep
 
 	fmt.Printf(
 		"[Checkpoint] saved at step %d\n",
