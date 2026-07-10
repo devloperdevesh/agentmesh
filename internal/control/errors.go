@@ -3,12 +3,9 @@ package control
 import "errors"
 
 var (
-	ErrWorkflowNotFound =
-		errors.New("workflow not found")
+	ErrWorkflowNotFound = errors.New("workflow not found")
 
-	ErrWorkflowExists =
-		errors.New("workflow already exists")
+	ErrWorkflowExists = errors.New("workflow already exists")
 
-	ErrCheckpointNotFound =
-		errors.New("checkpoint not found")
+	ErrCheckpointNotFound = errors.New("checkpoint not found")
 )

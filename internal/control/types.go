@@ -11,15 +11,13 @@ const (
 	StatusCompleted WorkflowStatus = "completed"
 )
 
-
 type Checkpoint struct {
-	ID        string
+	ID         string
 	WorkflowID string
-	Step      uint64
-	Payload   []byte
-	CreatedAt time.Time
+	Step       uint64
+	Payload    []byte
+	CreatedAt  time.Time
 }
-
 
 type Workflow struct {
 	ID string

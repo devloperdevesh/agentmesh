@@ -1,12 +1,9 @@
 package control
 
-
-type Metrics struct{
-
+type Metrics struct {
 	ActiveWorkflows int
 
 	Recoveries int
 
 	Checkpoints int
-
 }

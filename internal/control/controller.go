@@ -4,15 +4,11 @@ import (
 	"sync"
 )
 
-
 type Controller struct {
-
 	mu sync.RWMutex
 
 	workflows map[string]*Workflow
-
 }
-
 
 func NewController() *Controller {
 
@@ -22,18 +18,16 @@ func NewController() *Controller {
 
 }
 
-
-func (c *Controller) Get(id string)(*Workflow,error){
+func (c *Controller) Get(id string) (*Workflow, error) {
 
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 
+	w, ok := c.workflows[id]
 
-	w,ok:=c.workflows[id]
-
-	if !ok{
-		return nil,ErrWorkflowNotFound
+	if !ok {
+		return nil, ErrWorkflowNotFound
 	}
 
-	return w,nil
+	return w, nil
 }

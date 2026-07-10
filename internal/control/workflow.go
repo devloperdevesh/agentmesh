@@ -2,90 +2,71 @@ package control
 
 import "time"
 
-
 func (c *Controller) Start(
 	id string,
 	name string,
-) (*Workflow,error){
-
+) (*Workflow, error) {
 
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-
-	if _,exists:=c.workflows[id]; exists{
-		return nil,ErrWorkflowExists
+	if _, exists := c.workflows[id]; exists {
+		return nil, ErrWorkflowExists
 	}
 
+	w := &Workflow{
 
-	w:=&Workflow{
+		ID: id,
 
-		ID:id,
+		Name: name,
 
-		Name:name,
+		Status: StatusRunning,
 
-		Status:StatusRunning,
+		CurrentStep: 0,
 
-		CurrentStep:0,
+		CreatedAt: time.Now(),
 
-		CreatedAt:time.Now(),
-
-		UpdatedAt:time.Now(),
-
+		UpdatedAt: time.Now(),
 	}
 
+	c.workflows[id] = w
 
-	c.workflows[id]=w
-
-
-	return w,nil
+	return w, nil
 }
 
-
-
-func (c *Controller) Fail(id string) error{
-
+func (c *Controller) Fail(id string) error {
 
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
+	w, ok := c.workflows[id]
 
-	w,ok:=c.workflows[id]
-
-	if !ok{
+	if !ok {
 		return ErrWorkflowNotFound
 	}
 
+	w.Status = StatusFailed
 
-	w.Status=StatusFailed
-
-	w.UpdatedAt=time.Now()
-
+	w.UpdatedAt = time.Now()
 
 	return nil
 
 }
 
-
-
-func (c *Controller) Resume(id string) error{
-
+func (c *Controller) Resume(id string) error {
 
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
+	w, ok := c.workflows[id]
 
-	w,ok:=c.workflows[id]
-
-	if !ok{
+	if !ok {
 		return ErrWorkflowNotFound
 	}
 
+	w.Status = StatusRunning
 
-	w.Status=StatusRunning
-
-	w.UpdatedAt=time.Now()
-
+	w.UpdatedAt = time.Now()
 
 	return nil
 
