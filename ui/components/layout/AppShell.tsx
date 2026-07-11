@@ -1,23 +1,22 @@
 "use client";
 
-import { ReactNode } from "react";
+import Sidebar from "@/components/sidebar/Sidebar";
+import Navbar from "@/components/navbar/Navbar";
 
-type Props = {
-  sidebar: ReactNode;
-  navbar: ReactNode;
-  children: ReactNode;
-};
+interface Props {
+  children: React.ReactNode;
+}
 
-export default function AppShell({ sidebar, navbar, children }: Props) {
+export default function AppShell({ children }: Props) {
   return (
-    <div className="flex h-screen bg-[#09090B] text-white">
-      <aside className="w-72 border-r border-zinc-800">{sidebar}</aside>
+    <div className="flex h-screen bg-black">
+      <Sidebar />
 
-      <main className="flex flex-1 flex-col overflow-hidden">
-        <header className="h-16 border-b border-zinc-800">{navbar}</header>
+      <div className="flex flex-1 flex-col">
+        <Navbar />
 
-        <section className="flex-1 overflow-y-auto p-6">{children}</section>
-      </main>
+        <main className="flex-1 overflow-auto p-8">{children}</main>
+      </div>
     </div>
   );
 }
