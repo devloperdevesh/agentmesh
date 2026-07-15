@@ -817,3 +817,9 @@ See the `LICENSE` file for details.
 AgentMesh is inspired by operational practices from distributed systems, service meshes, and cloud-native infrastructure.
 
 The project builds upon established ideas in observability, fault tolerance, and runtime isolation while adapting them for long-running AI workloads.
+
+## Contributors
+
+<a href="https://github.com/devloperdevesh/FaultPlane/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=devloperdevesh/FaultPlane" />
+</a>
