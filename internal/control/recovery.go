@@ -5,7 +5,6 @@ import (
 	"time"
 )
 
-
 // Recover restores a workflow from its latest checkpoint
 // and resumes execution from the saved state.
 func (c *Controller) Recover(
@@ -13,7 +12,6 @@ func (c *Controller) Recover(
 ) error {
 
 	start := time.Now()
-
 
 	// Load latest checkpoint
 	checkpoint, err := c.RestoreCheckpoint(id)
@@ -26,8 +24,6 @@ func (c *Controller) Recover(
 			err,
 		)
 	}
-
-
 
 	// Resume workflow execution
 	err = c.Resume(
@@ -43,8 +39,6 @@ func (c *Controller) Recover(
 		)
 	}
 
-
-
 	// Record recovery metrics
 	if c.telemetry != nil {
 
@@ -52,8 +46,6 @@ func (c *Controller) Recover(
 			time.Since(start),
 		)
 	}
-
-
 
 	return nil
 }

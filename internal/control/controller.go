@@ -7,7 +7,6 @@ import (
 	"github.com/devloperdevesh/agentmesh/internal/telemetry"
 )
 
-
 // Controller manages agent workflow lifecycle,
 // state tracking and recovery operations.
 type Controller struct {
@@ -25,7 +24,6 @@ type Controller struct {
 	telemetry *telemetry.Collector
 }
 
-
 // NewController creates a new control plane controller.
 func NewController(
 	store storage.Store,
@@ -42,7 +40,6 @@ func NewController(
 	}
 }
 
-
 // Register adds a new workflow into controller state.
 func (c *Controller) Register(
 	id string,
@@ -55,7 +52,6 @@ func (c *Controller) Register(
 	c.workflows[id] = workflow
 }
 
-
 // Get retrieves workflow by ID.
 func (c *Controller) Get(
 	id string,
@@ -64,17 +60,14 @@ func (c *Controller) Get(
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 
-
 	workflow, exists := c.workflows[id]
 
 	if !exists {
 		return nil, ErrWorkflowNotFound
 	}
 
-
 	return workflow, nil
 }
-
 
 // Remove deletes workflow from controller.
 func (c *Controller) Remove(

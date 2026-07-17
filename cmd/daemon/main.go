@@ -17,42 +17,26 @@ import (
 
 func main() {
 
-	// -------------------------------------------------
-	// Initialize Storage Layer
-	// -------------------------------------------------
-
+	// Storage layer
 	store := storage.NewMemoryStore()
 
-	// -------------------------------------------------
-	// Initialize Telemetry Layer
-	// -------------------------------------------------
-
+	// Telemetry layer
 	registry := telemetry.NewRegistry()
 
 	collector := telemetry.NewCollector(
 		registry,
 	)
 
-	// -------------------------------------------------
-	// Initialize Control Plane
-	// -------------------------------------------------
-
+	// Control plane
 	controller := control.NewController(
 		store,
 		collector,
 	)
 
-	// -------------------------------------------------
-	// Initialize API Layer
-	// -------------------------------------------------
-
+	// HTTP API Router
 	router := api.NewRouter(
 		controller,
 	)
-
-	// -------------------------------------------------
-	// HTTP Server Configuration
-	// -------------------------------------------------
 
 	server := &http.Server{
 
@@ -69,15 +53,10 @@ func main() {
 
 	log.Println("===================================")
 	log.Println(" AgentMesh Control Plane ")
-	log.Println(" Environment: local ")
-	log.Println(" HTTP Server: :8080 ")
-	log.Println(" Storage: MemoryStore ")
-	log.Println(" Telemetry: Enabled ")
+	log.Println(" HTTP :8080 ")
+	log.Println(" Storage : MemoryStore ")
+	log.Println(" Telemetry : Enabled ")
 	log.Println("===================================")
-
-	// -------------------------------------------------
-	// Start HTTP Server
-	// -------------------------------------------------
 
 	go func() {
 
@@ -87,16 +66,12 @@ func main() {
 			err != http.ErrServerClosed {
 
 			log.Fatalf(
-				"server failed: %v",
+				"server error: %v",
 				err,
 			)
 		}
 
 	}()
-
-	// -------------------------------------------------
-	// Graceful Shutdown Handling
-	// -------------------------------------------------
 
 	stop := make(chan os.Signal, 1)
 
@@ -109,26 +84,27 @@ func main() {
 	<-stop
 
 	log.Println(
-		"Shutdown signal received...",
+		"shutdown signal received",
 	)
 
-	ctx, cancel := context.WithTimeout(
-		context.Background(),
-		5*time.Second,
-	)
+	ctx, cancel :=
+		context.WithTimeout(
+			context.Background(),
+			5*time.Second,
+		)
 
 	defer cancel()
 
-	if err := server.Shutdown(ctx); err != nil {
+	if err :=
+		server.Shutdown(ctx); err != nil {
 
 		log.Fatalf(
-			"graceful shutdown failed: %v",
+			"shutdown failed: %v",
 			err,
 		)
 	}
 
 	log.Println(
-		"AgentMesh stopped cleanly.",
+		"AgentMesh stopped cleanly",
 	)
-
 }
