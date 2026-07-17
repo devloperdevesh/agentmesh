@@ -1,7 +1,18 @@
 import DataTable from "./DataTable";
 import StatusBadge from "./StatusBadge";
 
-const workers = [
+type WorkerStatus = "healthy" | "recovering" | "offline";
+
+interface Worker {
+  id: string;
+  role: string;
+  status: WorkerStatus;
+  cpu: string;
+  memory: string;
+  requests: number;
+}
+
+const workers: Worker[] = [
   {
     id: "worker-01",
     role: "Primary",
@@ -26,15 +37,35 @@ export default function WorkersTable() {
       title="Workers"
       data={workers}
       columns={[
-        { header: "Worker", render: (w) => w.id },
-        { header: "Role", render: (w) => w.role },
+        {
+          header: "Worker",
+          render: (worker) => worker.id,
+        },
+
+        {
+          header: "Role",
+          render: (worker) => worker.role,
+        },
+
         {
           header: "Status",
-          render: (w) => <StatusBadge status={w.status} />,
+          render: (worker) => <StatusBadge status={worker.status} />,
         },
-        { header: "CPU", render: (w) => w.cpu },
-        { header: "Memory", render: (w) => w.memory },
-        { header: "Requests", render: (w) => w.requests },
+
+        {
+          header: "CPU",
+          render: (worker) => worker.cpu,
+        },
+
+        {
+          header: "Memory",
+          render: (worker) => worker.memory,
+        },
+
+        {
+          header: "Requests",
+          render: (worker) => worker.requests,
+        },
       ]}
     />
   );

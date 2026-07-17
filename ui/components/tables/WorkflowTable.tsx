@@ -1,7 +1,21 @@
 import DataTable from "./DataTable";
 import StatusBadge from "./StatusBadge";
 
-const workflows = [
+type WorkflowStatus =
+  | "running"
+  | "waiting"
+  | "recovering"
+  | "failed"
+  | "completed";
+
+interface Workflow {
+  name: string;
+  worker: string;
+  status: WorkflowStatus;
+  duration: string;
+}
+
+const workflows: Workflow[] = [
   {
     name: "Chat Agent",
     worker: "worker-01",
@@ -22,13 +36,25 @@ export default function WorkflowTable() {
       title="Workflows"
       data={workflows}
       columns={[
-        { header: "Workflow", render: (w) => w.name },
-        { header: "Worker", render: (w) => w.worker },
+        {
+          header: "Workflow",
+          render: (workflow) => workflow.name,
+        },
+
+        {
+          header: "Worker",
+          render: (workflow) => workflow.worker,
+        },
+
         {
           header: "State",
-          render: (w) => <StatusBadge status={w.status} />,
+          render: (workflow) => <StatusBadge status={workflow.status} />,
         },
-        { header: "Duration", render: (w) => w.duration },
+
+        {
+          header: "Duration",
+          render: (workflow) => workflow.duration,
+        },
       ]}
     />
   );
