@@ -16,6 +16,8 @@ import EbpfMonitor from "@/components/ebpf/EbpfMonitor";
 import SocketMigration from "@/components/topology/SocketMigration";
 import CheckpointTimeline from "@/components/gitops/CheckpointTimeline";
 
+import MemoryGrid from "@/components/memory/MemoryGrid";
+
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
@@ -120,6 +122,11 @@ export default function DashboardPage() {
 
       <section>
         <SocketMigration />
+      </section>
+
+        {/* Memory Layer */}
+      <section>
+        <MemoryGrid />
       </section>
     </div>
   );
