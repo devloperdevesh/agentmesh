@@ -13,31 +13,45 @@ import TelemetryLogs from "@/components/logs/TelemetryLogs";
 import KernelLogs from "@/components/logs/KernelLogs";
 
 import CheckpointTimeline from "@/components/timeline/CheckpointTimeline";
+
 import EbpfMonitor from "@/components/ebpf/EbpfMonitor";
+import SocketMigration from "@/components/topology/SocketMigration";
 
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
 
-      <div>
-        <h1 className="text-2xl font-semibold text-white">
+      <section>
+        <h1
+          className="
+          text-2xl
+          font-semibold
+          text-white
+          "
+        >
           Operations Dashboard
         </h1>
 
-        <p className="mt-1 text-sm text-zinc-500">
+        <p
+          className="
+          mt-1
+          text-sm
+          text-zinc-500
+          "
+        >
           FaultPlane runtime observability and recovery control
         </p>
-      </div>
+      </section>
 
-      {/* Metrics */}
+      {/* Runtime Metrics */}
 
       <section
         className="
         grid
         gap-4
         md:grid-cols-2
-        xl:grid-cols-4
+        xl:grid-cols-5
         "
       >
         <MetricCard title="Gateway" value="Healthy" />
@@ -47,9 +61,11 @@ export default function DashboardPage() {
         <RecoveryCard />
 
         <CostCard />
+
+        <SLAProtectionCard />
       </section>
 
-      {/* Charts */}
+      {/* Runtime Charts */}
 
       <section
         className="
@@ -63,9 +79,13 @@ export default function DashboardPage() {
         <RecoveryTimeline />
       </section>
 
-      {/* Workers */}
+      {/* Workload Tables */}
 
-      <section className="space-y-6">
+      <section
+        className="
+        space-y-6
+        "
+      >
         <WorkersTable />
 
         <WorkflowTable />
@@ -85,14 +105,22 @@ export default function DashboardPage() {
         <KernelLogs />
       </section>
 
-      {/* Timeline */}
+      {/* Recovery History */}
 
       <section>
         <CheckpointTimeline />
       </section>
 
+      {/* Kernel Layer */}
+
       <section>
         <EbpfMonitor />
+      </section>
+
+      {/* Transport Layer */}
+
+      <section>
+        <SocketMigration />
       </section>
     </div>
   );
