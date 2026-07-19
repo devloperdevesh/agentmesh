@@ -13,121 +13,328 @@ import TelemetryLogs from "@/components/logs/TelemetryLogs";
 import KernelLogs from "@/components/logs/KernelLogs";
 
 import EbpfMonitor from "@/components/ebpf/EbpfMonitor";
+
 import SocketMigration from "@/components/topology/SocketMigration";
+
 import CheckpointTimeline from "@/components/gitops/CheckpointTimeline";
 
 import MemoryGrid from "@/components/memory/MemoryGrid";
 
-export default function DashboardPage() {
-  return (
-    <div className="space-y-8">
-      {/* Header */}
+import BlastGraph from "@/components/blast-radius/BlastGraph";
+import FailurePropagation from "@/components/blast-radius/FailurePropagation";
+import ImpactTimeline from "@/components/blast-radius/ImpactTimeline";
+import StateDiff from "@/components/gitops/StateDiff";
+import FinOpsOverview from "@/components/cards/FinOpsOverview";
+import TenantTable from "@/components/tables/TenantTable";
+import RuntimeShield from "@/components/status/RuntimeShield";
+import CapabilityMatrix from "@/components/status/CapabilityMatrix";
+import ThreatScore from "@/components/status/ThreatScore";
+import InterceptorLogs from "@/components/telemetry/InterceptorLogs";
+import ProxyStream from "@/components/telemetry/ProxyStream";
+import HijackDetection from "@/components/telemetry/HijackDetection";
+import TransportMetrics from "@/components/telemetry/TransportMetrics";
+import SpeculativePath from "@/components/workflows/SpeculativePath";
 
-      <section>
-        <h1
+function Section({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      className="
+      rounded-2xl
+      border
+      border-white/10
+      bg-zinc-950/60
+      backdrop-blur-xl
+      p-6
+      shadow-xl
+      shadow-black/20
+      "
+    >
+      <div className="mb-6">
+        <h2
           className="
-          text-2xl
+          text-sm
           font-semibold
           text-white
           "
         >
-          Operations Dashboard
+          {title}
+        </h2>
+
+        {description && (
+          <p
+            className="
+            mt-1
+            text-xs
+            text-zinc-500
+            "
+          >
+            {description}
+          </p>
+        )}
+      </div>
+
+      {children}
+    </section>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <div
+      className="
+space-y-8
+"
+    >
+      {/* Header */}
+
+      <header>
+        <h1
+          className="
+text-3xl
+font-semibold
+tracking-tight
+text-white
+"
+        >
+          Operations Console
         </h1>
 
         <p
           className="
-          mt-1
-          text-sm
-          text-zinc-500
-          "
+mt-2
+text-sm
+text-zinc-500
+"
         >
-          FaultPlane runtime observability and recovery control
+          FaultPlane runtime observability, recovery intelligence and transport
+          resilience control plane.
         </p>
-      </section>
+      </header>
 
-      {/* Runtime Metrics */}
+      {/* Runtime Overview */}
 
-      <section
-        className="
-        grid
-        gap-4
-        md:grid-cols-2
-        xl:grid-cols-5
-        "
+      <Section
+        title="Runtime Overview"
+        description="Current infrastructure health and recovery metrics"
       >
-        <MetricCard title="Gateway" value="Healthy" />
+        <div
+          className="
+grid
+gap-4
+md:grid-cols-2
+xl:grid-cols-5
+"
+        >
+          <MetricCard title="Gateway" value="Healthy" />
 
-        <MetricCard title="Active Workers" value="2" />
+          <MetricCard title="Active Workers" value="24" />
 
-        <RecoveryCard />
+          <RecoveryCard />
 
-        <CostCard />
+          <CostCard />
 
-        <SLAProtectionCard />
-      </section>
+          <SLAProtectionCard />
+        </div>
+      </Section>
 
-      {/* Runtime Charts */}
+      {/* Performance */}
 
-      <section
-        className="
-        grid
-        gap-6
-        xl:grid-cols-2
-        "
+      <Section
+        title="Performance Telemetry"
+        description="Latency boundaries and recovery execution metrics"
       >
-        <LatencyChart />
+        <div
+          className="
+grid
+gap-6
+xl:grid-cols-2
+"
+        >
+          <LatencyChart />
 
-        <RecoveryTimeline />
-      </section>
+          <RecoveryTimeline />
+        </div>
+      </Section>
 
-      {/* Workload Tables */}
+      {/* Workload */}
 
-      <section
-        className="
-        space-y-6
-        "
+      <Section
+        title="Workload Runtime"
+        description="Agent execution and worker state management"
       >
-        <WorkersTable />
+        <div
+          className="
+space-y-6
+"
+        >
+          <WorkersTable />
 
-        <WorkflowTable />
-      </section>
+          <WorkflowTable />
+        </div>
+      </Section>
 
-      {/* Logs */}
+      {/* Observability */}
 
-      <section
-        className="
-        grid
-        gap-6
-        xl:grid-cols-2
-        "
+      <Section
+        title="Kernel Observability"
+        description="Low level runtime events and system telemetry"
       >
-        <TelemetryLogs />
+        <div
+          className="
+grid
+gap-6
+xl:grid-cols-2
+"
+        >
+          <TelemetryLogs />
 
-        <KernelLogs />
-      </section>
+          <KernelLogs />
+        </div>
 
-      {/* Recovery History */}
+        <div
+          className="
+mt-6
+"
+        >
+          <EbpfMonitor />
+        </div>
+      </Section>
 
-      <section>
-        <CheckpointTimeline />
-      </section>
+      {/* Infrastructure */}
 
-      {/* Kernel Layer */}
-
-      <section>
-        <EbpfMonitor />
-      </section>
-
-      {/* Transport Layer */}
-
-      <section>
+      <Section
+        title="Transport Infrastructure"
+        description="Network failover and connection migration state"
+      >
         <SocketMigration />
-      </section>
+      </Section>
 
-        {/* Memory Layer */}
-      <section>
+      {/* Memory */}
+
+      <Section
+        title="State Resilience"
+        description="Runtime memory migration and checkpoint restoration"
+      >
         <MemoryGrid />
-      </section>
+      </Section>
+
+      {/* Recovery Intelligence */}
+
+      <Section
+        title="Recovery Intelligence"
+        description="Failure impact analysis and blast radius containment"
+      >
+        <div
+          className="
+grid
+gap-6
+xl:grid-cols-3
+"
+        >
+          <BlastGraph />
+
+          <FailurePropagation />
+
+          <ImpactTimeline />
+        </div>
+
+        <div
+          className="
+mt-6
+"
+        >
+          <CheckpointTimeline />
+        </div>
+      </Section>
+      {/* GitOps Debugging */}
+
+      <Section
+        title="Checkpoint Debugging"
+        description="Runtime state comparison and recovery verification"
+      >
+        <StateDiff />
+      </Section>
+      {/* FinOps Intelligence */}
+
+      <Section
+        title="FinOps Intelligence"
+        description="Cloud cost optimization and resource efficiency"
+      >
+        <FinOpsOverview />
+      </Section>
+
+      {/* Multi Tenant Governance */}
+
+      <Section
+        title="Multi Tenant Governance"
+        description="Tenant isolation, quota and resource management"
+      >
+        <TenantTable />
+      </Section>
+
+      <Section
+        title="Runtime Security"
+        description="WASM sandbox isolation and workload protection"
+      >
+        <div
+          className="
+space-y-6
+"
+        >
+          <RuntimeShield />
+
+          <div
+            className="
+grid
+gap-6
+xl:grid-cols-2
+"
+          >
+            <CapabilityMatrix />
+
+            <ThreatScore />
+          </div>
+        </div>
+      </Section>
+
+      <Section
+        title="Network Security Telemetry"
+        description="Transport interception and connection intelligence"
+      >
+        <div className="space-y-6">
+          <TransportMetrics />
+
+          <div
+            className="
+grid
+gap-6
+xl:grid-cols-2
+"
+          >
+            <InterceptorLogs />
+
+            <ProxyStream />
+          </div>
+
+          <HijackDetection />
+        </div>
+      </Section>
+      {/* Speculative Execution */}
+
+      <Section
+        title="Workflow Intelligence"
+        description="Speculative execution and branch prediction"
+      >
+        <SpeculativePath />
+      </Section>
     </div>
   );
 }

@@ -1,40 +1,28 @@
-"use client";
+import InspectorPanel from "./InspectorPanel";
 
-interface DashboardLayoutProps {
+interface Props {
   children: React.ReactNode;
+
   inspector?: React.ReactNode;
 }
 
-export default function DashboardLayout({
-  children,
-  inspector,
-}: DashboardLayoutProps) {
+export default function DashboardLayout({ children, inspector }: Props) {
   return (
     <div
       className="
-        grid
-        h-full
-        grid-cols-[1fr_320px]
-        gap-6
-      "
+flex
+h-full
+"
     >
-      {/* Main Workspace */}
-      <section>{children}</section>
-
-      {/* Right Inspector Panel */}
-      <aside
+      <section
         className="
-          rounded-xl
-          border
-          border-zinc-800
-          bg-zinc-950
-          p-5
-        "
+flex-1
+"
       >
-        {inspector ?? (
-          <div className="text-sm text-zinc-500">Runtime Inspector</div>
-        )}
-      </aside>
+        {children}
+      </section>
+
+      <InspectorPanel>{inspector}</InspectorPanel>
     </div>
   );
 }

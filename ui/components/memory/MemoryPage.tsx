@@ -1,29 +1,29 @@
 interface Props {
-  status: "active" | "moving" | "synced" | "empty";
+  state: "stable" | "migrating" | "restored" | "empty";
 }
 
-export default function MemoryPage({ status }: Props) {
-  const styles = {
-    active: "bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]",
+const styles = {
+  stable: "bg-cyan-400/80 shadow-cyan-400/40",
 
-    moving:
-      "bg-yellow-400 animate-pulse shadow-[0_0_12px_rgba(250,204,21,0.8)]",
+  migrating: "bg-yellow-400 animate-pulse shadow-yellow-400/60",
 
-    synced: "bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]",
+  restored: "bg-emerald-400 shadow-emerald-400/40",
 
-    empty: "bg-zinc-800",
-  };
+  empty: "bg-zinc-800",
+};
 
+export default function MemoryPage({ state }: Props) {
   return (
     <div
       className={`
-   h-6
-   w-6
-   rounded-sm
-   transition-all
-   duration-500
-   ${styles[status]}
-   `}
+        h-8
+        w-8
+        rounded-md
+        shadow-lg
+        transition-all
+        duration-500
+        ${styles[state]}
+        `}
     />
   );
 }

@@ -2,6 +2,7 @@
 
 import Sidebar from "@/components/sidebar/Sidebar";
 import Navbar from "@/components/navbar/Navbar";
+import MainWorkspace from "./MainWorkspace";
 
 interface Props {
   children: React.ReactNode;
@@ -9,13 +10,27 @@ interface Props {
 
 export default function AppShell({ children }: Props) {
   return (
-    <div className="flex h-screen bg-black">
+    <div
+      className="
+flex
+h-screen
+overflow-hidden
+bg-black
+text-white
+"
+    >
       <Sidebar />
 
-      <div className="flex flex-1 flex-col">
+      <div
+        className="
+flex
+flex-1
+flex-col
+"
+      >
         <Navbar />
 
-        <main className="flex-1 overflow-auto p-8">{children}</main>
+        <MainWorkspace>{children}</MainWorkspace>
       </div>
     </div>
   );
