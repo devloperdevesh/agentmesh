@@ -1,37 +1,66 @@
+"use client";
+
+import RuntimeState from "./RuntimeState";
+import ContextGauge from "./ContextGauge";
+import CheckpointStatus from "./CheckpointStatus";
+
 export default function AgentInspector() {
   return (
-    <div
+    <aside
       className="
-        rounded-xl
-        border
-        border-zinc-800
-        bg-zinc-950
-        p-5
-        "
+space-y-6
+rounded-2xl
+border
+border-white/10
+bg-zinc-950/80
+p-6
+"
     >
-      <h2 className="text-sm font-semibold text-white">Agent Inspector</h2>
+      <div>
+        <h2
+          className="
+text-sm
+font-semibold
+text-white
+"
+        >
+          Agent Inspector
+        </h2>
 
-      <p className="mt-1 text-xs text-zinc-500">Runtime execution details</p>
-
-      <div className="mt-5 space-y-3">
-        <div className="flex justify-between">
-          <span className="text-sm text-zinc-400">Agent ID</span>
-
-          <span className="text-sm text-white">agent-worker-01</span>
-        </div>
-
-        <div className="flex justify-between">
-          <span className="text-sm text-zinc-400">Status</span>
-
-          <span className="text-sm text-emerald-400">Running</span>
-        </div>
-
-        <div className="flex justify-between">
-          <span className="text-sm text-zinc-400">Context</span>
-
-          <span className="text-sm text-white">84k tokens</span>
-        </div>
+        <p
+          className="
+mt-1
+text-xs
+text-zinc-500
+"
+        >
+          Runtime execution details
+        </p>
       </div>
-    </div>
+
+      <div
+        className="
+space-y-4
+"
+      >
+        <div>
+          <p className="text-xs text-zinc-500">State</p>
+
+          <div className="mt-2">
+            <RuntimeState state="RUNNING" />
+          </div>
+        </div>
+
+        <div>
+          <p className="text-xs text-zinc-500">Memory</p>
+
+          <p className="mt-2 text-xl text-white">245 MB</p>
+        </div>
+
+        <ContextGauge value={84} />
+
+        <CheckpointStatus />
+      </div>
+    </aside>
   );
 }
