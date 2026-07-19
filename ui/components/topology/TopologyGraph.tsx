@@ -2,6 +2,8 @@ import GatewayNode from "./GatewayNode";
 import WorkerNode from "./WorkerNode";
 import Connection from "./Connection";
 
+import Node from "./Node";
+
 export default function TopologyGraph() {
   return (
     <div
@@ -33,6 +35,7 @@ export default function TopologyGraph() {
         <Connection label="TCP Stream" />
 
         <WorkerNode id="Worker-01" status="Running" />
+        <Node label="Client" type="External" />
 
         <Connection label="Checkpoint Sync" />
 
