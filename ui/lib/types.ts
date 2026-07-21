@@ -1,26 +1,51 @@
+// ===============================
 // Runtime Worker Contract
+// ===============================
+
+export type WorkerStatus =
+  | "ACTIVE"
+  | "FAILED"
+  | "RECOVERING"
+  | "STOPPED";
+
+
+export type WorkerRole =
+  | "PRIMARY"
+  | "STANDBY";
+
 
 export interface Worker {
+
   id: string;
 
-  status:
-    | "ACTIVE"
-    | "FAILED"
-    | "RECOVERING";
+  status: WorkerStatus;
 
-  cpu: number;
+  role: WorkerRole;
 
-  memory: string;
+  cpuUsage: number; // percentage 0-100
 
-  checkpoint: string;
+  memoryUsage: string;
 
-  role:
-    | "PRIMARY"
-    | "STANDBY";
+  checkpointId?: string;
+
+  lastHeartbeat?: string;
+
+  createdAt?: string;
+
+  updatedAt?: string;
 }
 
 
+// ===============================
 // Workflow Contract
+// ===============================
+
+export type WorkflowStatus =
+  | "RUNNING"
+  | "FAILED"
+  | "COMPLETED"
+  | "PAUSED";
+
 
 export interface Workflow {
 
@@ -28,14 +53,19 @@ export interface Workflow {
 
   name: string;
 
-  status:
-    | "RUNNING"
-    | "FAILED";
+  status: WorkflowStatus;
 
+  createdAt?: string;
+
+  updatedAt?: string;
+
+  workerIds?: string[];
 }
 
 
+// ===============================
 // Checkpoint Contract
+// ===============================
 
 export interface Checkpoint {
 
@@ -45,38 +75,61 @@ export interface Checkpoint {
 
   size: string;
 
+  storagePath?: string;
+
+  checksum?: string;
+
+  version?: number;
+
 }
 
 
+// ===============================
 // Metrics Contract
+// ===============================
 
 export interface Metric {
 
   name: string;
 
-  value: string;
+  value: number;
 
+  unit?: string;
+
+  timestamp?: string;
 }
 
 
+// ===============================
 // Telemetry Contract
+// ===============================
+
+export type TelemetryLevel =
+  | "INFO"
+  | "WARN"
+  | "ERROR"
+  | "SUCCESS";
+
 
 export interface TelemetryEvent {
 
-  level:
-    | "INFO"
-    | "WARN"
-    | "ERROR"
-    | "SUCCESS";
+  level: TelemetryLevel;
 
   message: string;
 
   timestamp: string;
 
+  workerId?: string;
+
+  workflowId?: string;
+
+  metadata?: Record<string, unknown>;
 }
 
 
+// ===============================
 // GitOps State Diff Contract
+// ===============================
 
 export type VariableDiffType =
   | "modified"
@@ -85,14 +138,62 @@ export type VariableDiffType =
   | "unchanged";
 
 
-export interface VariableDiffData {
+export interface VariableDiff {
 
   key: string;
 
-  before: string;
+  before?: string;
 
-  after: string;
+  after?: string;
 
   type: VariableDiffType;
+
+}
+
+
+// ===============================
+// API Response Wrapper
+// ===============================
+
+export interface ApiResponse<T> {
+
+  data: T;
+
+  message?: string;
+
+  timestamp: string;
+
+}
+
+
+// ===============================
+// Pagination Contract
+// ===============================
+
+export interface Pagination {
+
+  page: number;
+
+  limit: number;
+
+  total: number;
+
+}
+
+
+// ===============================
+// Health Status
+// ===============================
+
+export interface HealthStatus {
+
+  status:
+    | "HEALTHY"
+    | "DEGRADED"
+    | "UNHEALTHY";
+
+  uptime: number;
+
+  version: string;
 
 }
