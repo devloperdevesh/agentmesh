@@ -1,4 +1,11 @@
 import type { LucideIcon } from "lucide-react";
+import {
+  FlaskConical,
+  Clock3,
+  Shield,
+  Sparkles,
+  DollarSign,
+} from "lucide-react";
 
 import {
   Activity,
@@ -57,5 +64,31 @@ export const navigation: NavigationItem[] = [
     title: "Settings",
     href: "/settings",
     icon: Settings,
+  },
+  {
+    title: "Experimental",
+    icon: FlaskConical,
+    children: [
+      {
+        title: "Time Travel",
+        href: "/experimental/time-travel",
+        icon: Clock3,
+      },
+      {
+        title: "WASM Sandbox",
+        href: "/experimental/wasm",
+        icon: Shield,
+      },
+      {
+        title: "Speculative Paths",
+        href: "/experimental/speculative",
+        icon: Sparkles,
+      },
+      {
+        title: "FinOps",
+        href: "/experimental/finops",
+        icon: DollarSign,
+      },
+    ],
   },
 ];
