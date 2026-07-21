@@ -43,6 +43,18 @@ import HijackDetection from "@/components/telemetry/HijackDetection";
 
 import SpeculativePath from "@/components/workflows/SpeculativePath";
 
+import WorkerTable from "@/components/workers/WorkerTable";
+import AgentInspector from "@/components/inspector/AgentInspector";
+import TopologyGraph from "@/components/topology/TopologyGraph";
+
+import SystemResources from "@/components/status/SystemResources";
+import StateDiffViewer from "../experimental/time-travel/StateDiffViewer";
+import ExecutionTree from "@/components/experimental/speculative/ExecutionTree";
+
+import CostArbitrage from "@/components/experimental/finops/CostArbitrage";
+
+import WasmSandbox from "@/components/experimental/wasm/WasmSandbox";
+
 function Section({
   title,
   description,
@@ -352,6 +364,68 @@ xl:grid-cols-2
         description="Speculative execution and branch prediction"
       >
         <SpeculativePath />
+      </Section>
+
+      {/* Worker Runtime */}
+
+      <Section
+        title="Worker Runtime"
+        description="Live worker execution health and checkpoint state"
+      >
+        <WorkerTable />
+      </Section>
+      {/* Agent Inspector */}
+      <Section
+        title="Agent Inspector"
+        description="Runtime agent diagnostics and monitoring"
+      >
+        <AgentInspector />
+      </Section>
+      {/* Infrastructure Topology */}
+      <Section
+        title="Infrastructure Topology"
+        description="Runtime service dependency graph"
+      >
+        <TopologyGraph />
+      </Section>
+      {/* Recovery Timeline */}
+
+      <Section
+        title="Recovery Timeline"
+        description="Failure recovery execution history"
+      >
+        <RecoveryTimeline />
+      </Section>
+      {/* System Health */}
+
+      <Section title="System Health" description="Runtime resource monitoring">
+        <SystemResources />
+      </Section>
+
+      {/* Time Travel Debugging */}
+
+      <Section
+        title="Time Travel Debugging"
+        description="Checkpoint based agent state comparison"
+      >
+        <StateDiffViewer />
+      </Section>
+      <Section
+        title="Speculative Execution"
+        description="AI workflow prediction engine"
+      >
+        <ExecutionTree />
+      </Section>
+
+      <Section
+        title="FinOps Optimization"
+        description="Runtime compute cost intelligence"
+      >
+        <CostArbitrage />
+      </Section>
+
+      <Section title="Sandbox Security" description="WASM workload isolation">
+        <WasmSandbox />
       </Section>
     </div>
   );

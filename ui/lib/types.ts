@@ -22,7 +22,7 @@ export interface Worker {
 
   role: WorkerRole;
 
-  cpuUsage: number; // percentage 0-100
+  cpuUsage: number;
 
   memoryUsage: string;
 
@@ -33,6 +33,7 @@ export interface Worker {
   createdAt?: string;
 
   updatedAt?: string;
+
 }
 
 
@@ -60,6 +61,7 @@ export interface Workflow {
   updatedAt?: string;
 
   workerIds?: string[];
+
 }
 
 
@@ -97,6 +99,7 @@ export interface Metric {
   unit?: string;
 
   timestamp?: string;
+
 }
 
 
@@ -124,6 +127,7 @@ export interface TelemetryEvent {
   workflowId?: string;
 
   metadata?: Record<string, unknown>;
+
 }
 
 
@@ -138,7 +142,7 @@ export type VariableDiffType =
   | "unchanged";
 
 
-export interface VariableDiff {
+export interface VariableDiffData {
 
   key: string;
 
@@ -149,6 +153,10 @@ export interface VariableDiff {
   type: VariableDiffType;
 
 }
+
+
+// Existing components compatibility
+export type VariableDiff = VariableDiffData;
 
 
 // ===============================

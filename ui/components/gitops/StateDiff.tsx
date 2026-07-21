@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 
-import VariableDiff from "./VariableDiff";
+import VariableDiffRow from "./VariableDiff";
 import StateSummary from "./StateSummary";
 
-import type { VariableDiffData } from "@/lib/types";
+import type { VariableDiff } from "@/lib/types";
 
-const changes: VariableDiffData[] = [
+const changes: VariableDiff[] = [
   {
     key: "model",
     before: "gpt-4o",
@@ -41,25 +41,43 @@ export default function StateDiff() {
   return (
     <section
       className="
-      rounded-2xl
-      border
-      border-white/10
-      bg-zinc-950/80
-      p-8
-      space-y-8
+        rounded-2xl
+        border
+        border-white/10
+        bg-zinc-950/80
+        p-8
+        space-y-8
       "
     >
+      {/* Header */}
+
       <div>
-        <h2 className="text-lg font-semibold text-white">
+        <h2
+          className="
+            text-lg
+            font-semibold
+            text-white
+          "
+        >
           Checkpoint State Diff
         </h2>
 
-        <p className="mt-1 text-sm text-zinc-500">
+        <p
+          className="
+            mt-1
+            text-sm
+            text-zinc-500
+          "
+        >
           Compare runtime state against recovery snapshot
         </p>
       </div>
 
+      {/* Summary */}
+
       <StateSummary />
+
+      {/* Diff List */}
 
       <div className="space-y-4">
         {changes.map((change, index) => (
@@ -75,9 +93,10 @@ export default function StateDiff() {
             }}
             transition={{
               delay: index * 0.08,
+              duration: 0.25,
             }}
           >
-            <VariableDiff data={change} />
+            <VariableDiffRow data={change} />
           </motion.div>
         ))}
       </div>
