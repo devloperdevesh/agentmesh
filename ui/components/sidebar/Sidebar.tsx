@@ -6,7 +6,48 @@ import SidebarItem from "./SidebarItem";
 import SidebarLogo from "./SidebarLogo";
 import SidebarSection from "./SidebarSection";
 
-import { navigation } from "@/lib/navigation";
+import { navigation, type NavigationItem } from "@/lib/navigation";
+
+function isLeafItem(
+  item: NavigationItem,
+): item is NavigationItem & { href: string } {
+  return Boolean(item.href);
+}
+
+function renderNavigation(items: NavigationItem[], pathname: string) {
+  return items.map((item) => {
+    if (item.children?.length) {
+      const hasActiveChild = item.children.some(
+        (child) => child.href === pathname,
+      );
+
+      return (
+        <SidebarSection
+          key={item.title}
+          title={item.title}
+          icon={item.icon}
+          active={hasActiveChild}
+        >
+          {renderNavigation(item.children, pathname)}
+        </SidebarSection>
+      );
+    }
+
+    if (isLeafItem(item)) {
+      return (
+        <SidebarItem
+          key={item.href}
+          title={item.title}
+          href={item.href}
+          icon={item.icon}
+          active={pathname === item.href}
+        />
+      );
+    }
+
+    return null;
+  });
+}
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -24,7 +65,11 @@ export default function Sidebar() {
       bg-zinc-950
       "
     >
+      {/* Brand */}
+
       <SidebarLogo />
+
+      {/* Navigation */}
 
       <nav
         className="
@@ -32,41 +77,12 @@ export default function Sidebar() {
         overflow-y-auto
         px-4
         py-6
-        scrollbar-thin
-        scrollbar-thumb-zinc-800
-        scrollbar-track-transparent
         "
       >
-        <SidebarSection title="Operations">
-          {navigation.slice(0, 3).map((item) => (
-            <SidebarItem
-              key={item.href}
-              {...item}
-              active={pathname === item.href}
-            />
-          ))}
-        </SidebarSection>
-
-        <SidebarSection title="Runtime">
-          {navigation.slice(3, 7).map((item) => (
-            <SidebarItem
-              key={item.href}
-              {...item}
-              active={pathname === item.href}
-            />
-          ))}
-        </SidebarSection>
-
-        <SidebarSection title="System">
-          {navigation.slice(7).map((item) => (
-            <SidebarItem
-              key={item.href}
-              {...item}
-              active={pathname === item.href}
-            />
-          ))}
-        </SidebarSection>
+        {renderNavigation(navigation, pathname)}
       </nav>
+
+      {/* Footer */}
 
       <footer
         className="
@@ -82,15 +98,30 @@ export default function Sidebar() {
           border-zinc-800
           bg-zinc-900/70
           p-4
-          backdrop-blur
           "
         >
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-white">Enterprise</span>
+          <div
+            className="
+            flex
+            items-center
+            justify-between
+            "
+          >
+            <span
+              className="
+              text-sm
+              font-medium
+              text-white
+              "
+            >
+              Enterprise
+            </span>
 
             <span
               className="
               rounded-full
+              border
+              border-emerald-500/30
               bg-emerald-500/10
               px-2
               py-0.5
@@ -105,7 +136,15 @@ export default function Sidebar() {
             </span>
           </div>
 
-          <p className="mt-2 text-xs text-zinc-500">Version v0.1.0</p>
+          <p
+            className="
+            mt-2
+            text-xs
+            text-zinc-500
+            "
+          >
+            FaultPlane v0.1.0
+          </p>
         </div>
       </footer>
     </aside>
