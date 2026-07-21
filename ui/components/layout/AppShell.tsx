@@ -1,37 +1,78 @@
 "use client";
 
-import Sidebar from "@/components/sidebar/Sidebar";
-import Navbar from "@/components/navbar/Navbar";
-import MainWorkspace from "./MainWorkspace";
+import { ReactNode } from "react";
 
-interface Props {
-  children: React.ReactNode;
+import Workspace from "./Workspace";
+import InspectorPanel from "./InspectorPanel";
+import BottomStatusBar from "./BottomStatusBar";
+
+interface AppShellProps {
+  children: ReactNode;
 }
 
-export default function AppShell({ children }: Props) {
+export default function AppShell({ children }: AppShellProps) {
   return (
-    <div
+    <main
       className="
-flex
-h-screen
-overflow-hidden
-bg-black
-text-white
-"
+        h-screen
+        w-full
+        flex
+        flex-col
+        overflow-hidden
+        bg-zinc-950
+        text-zinc-100
+      "
     >
-      <Sidebar />
+      {/* Main Application Area */}
 
-      <div
+      <section
         className="
-flex
-flex-1
-flex-col
-"
+          flex-1
+          min-h-0
+          flex
+          overflow-hidden
+        "
       >
-        <Navbar />
+        {/* Workspace / Canvas */}
 
-        <MainWorkspace>{children}</MainWorkspace>
-      </div>
-    </div>
+        <div
+          className="
+            flex-1
+            min-w-0
+            overflow-hidden
+          "
+        >
+          <Workspace>{children}</Workspace>
+        </div>
+
+        {/* Runtime Inspector */}
+
+        <aside
+          className="
+            w-80
+            border-l
+            border-zinc-800
+            bg-zinc-900/40
+            overflow-y-auto
+          "
+        >
+          <InspectorPanel />
+        </aside>
+      </section>
+
+      {/* System Status */}
+
+      <footer
+        className="
+          h-8
+          shrink-0
+          border-t
+          border-zinc-800
+          bg-zinc-950
+        "
+      >
+        <BottomStatusBar />
+      </footer>
+    </main>
   );
 }
